@@ -87,16 +87,6 @@ ipch/
 *.sap
 *.vcxproj
 *.filters
-*.slo
-*.lo
-*.o
-*.obj
-*.pdb
-*.idb
-*.tlog
-*.log
-*.suo
-*.lastbuildstate
 
 # TFS 2012 Local Workspace
 $tf/
