@@ -22,7 +22,8 @@ F77    	=	f77
 	${CC} ${CFLAGS} $< -c
 
 
-objects =  App_Network_2D.o Fem_3D.o Gauss.o GenNetwork_2D.o Geometry_2D.o Geometry_3D.o \
+objects =  App_Network_2D.o Background_vectors.o Cutoff_Wins.o Fem_3D.o\
+			  Gauss.o GenNetwork_2D.o Geometry_3D.o \
            	  Hns.o Input_Reader.o MathMatrix.o Tecplot_Export.o MainPro.o \
 	                   
 necn : $(objects)        

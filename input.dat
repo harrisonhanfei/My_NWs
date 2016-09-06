@@ -76,7 +76,7 @@ uniform 0.005 0.005
 %or if you input "wt", the weight fraction is the criterion and the mode of accumulation and the linear density (1E-12g/'nu'm) of CNT and the density (1E-12g/'nu'm^3)of polymer are needed.
 %the mode of accumulation: 0 means every sample uses the same fraction; 1 or 2 mean every sample uses the accumulated fraction by different ways
 %nwt 0.005 0 5.8E-5 1.06
-area 0.05 0
+area 0.20 0
 %--------------------------------To end
 %
 %
@@ -102,13 +102,13 @@ area 0.05 0
 %========================================================================================================
 %-------------------------------- AMC
 %Define the cutoff distances
-%Cutoff_Distances
+Cutoff_Distances
 %--------------------------------To start
 %Define van der Waals distance
-%0.000340
+0.000340
 %------------------------------------------------------------------------------------------------------------------------------------------------------------
 %Define cutoff distance for tunneling
-%0.001800
+0.001800
 %-------------------------------- To end
 %
 %

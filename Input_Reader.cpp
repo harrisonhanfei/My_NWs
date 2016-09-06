@@ -28,6 +28,7 @@ int Input::Read_Infile(ifstream &infile)
 		else if(str_temp=="Simulation_Parameters")	{ if(Read_simulation_parameters(simu_para, infile)==0) return 0; }
 		else if(str_temp=="RVE_Geometry")	{ if(Read_rve_geometry(geom_rve, infile)==0) return 0; }
 		else if(str_temp=="Nanowire_Geometry")	{ if(Read_nanowire_geo_parameters(nanowire_geo, infile)==0) return 0; }
+		else if(str_temp=="Cutoff_Distances")	{ if(Read_cutoff_distances(cutoff_dist, infile)==0) return 0; }
 		else if(str_temp=="Electrical_Parameters")	{ if(Read_electrical_paramters(electric_para, infile)==0) return 0; }
 		else 
 		{ 
@@ -59,7 +60,7 @@ int Input::Read_Infile(ifstream &infile)
 	if(!app_name.mark) { cout << "Attention: \"Application_Name\" will use default parameters!" << endl; hout << "Attention: \"Application_Name\" will use default parameters!" << endl; }
 	if(!simu_para.mark) { cout << "Attention: \"Simulation_Parameters\" will use default parameters!" << endl; hout << "Attention: \"Simulation_Parameters\" will use default parameters!" << endl; }
 	if(!geom_rve.mark) { cout << "Attention: \"RVE_Geometry\" will use default parameters!" << endl; hout << "Attention: \"RVE_Geometry\" will use default parameters!" << endl; }
-	if(!nanowire_geo.mark) {	cout << "Attention: \"Nanowire_Geometry\" will use default parameters!" << endl; hout << "Attention: \"Nanowire_Geometry\" will use default parameters!" << endl; }	
+	if(!nanowire_geo.mark) { cout << "Attention: \"Nanowire_Geometry\" will use default parameters!" << endl; hout << "Attention: \"Nanowire_Geometry\" will use default parameters!" << endl; }	
 	if(!electric_para.mark) {	cout << "Attention: \"Electrical_Parameters\" will use default parameters!" << endl; hout << "Attention: \"Electrical_Parameters\" will use default parameters!" << endl; }
 
 	return 1;
@@ -125,6 +126,11 @@ int Input::Data_Initialization()
 	nanowire_geo.matrix_density = 1.06;
 	nanowire_geo.linear_density = 5.8E-5;
 
+	//Initialize cutoff distances
+	cutoff_dist.keywords = "Cutoff_Distances";
+	cutoff_dist.mark = false;
+	cutoff_dist.tunneling_dist = 0.0018;
+	cutoff_dist.van_der_Waals_dist = 0.00034;
 
 	//Initialize electrical parameters
 	electric_para.keywords = "Electrical_Parameters";
@@ -236,10 +242,10 @@ int Input::Read_rve_geometry(struct Geom_RVE &geom_rve, ifstream &infile)
 	}
 
 	//Details: +Zero for reducing the error of division
-	int num[3] = { (int)((geom_rve.win_max_x - geom_rve.win_min_x + Zero) / geom_rve.win_delt_x),
+	int num[2] = { (int)((geom_rve.win_max_x - geom_rve.win_min_x + Zero) / geom_rve.win_delt_x),
 		(int)((geom_rve.win_max_y - geom_rve.win_min_y + Zero) / geom_rve.win_delt_y) };
 
-	if(num[0]!=num[1]||num[0]!=num[2])
+	if(num[0]!=num[1])
 	{
 		cout << "Error: the numbers of cutoff times are different in three directions (x, y)." << endl;
 		hout << "Error: the numbers of cutoff times are different in three directions (x, y)." << endl;
@@ -350,7 +356,26 @@ int Input::Read_nanowire_geo_parameters(struct Nanowire_Geo &nanowire_geo, ifstr
 
 	return 1;
 }
+//---------------------------------------------------------------------------
+//Reading the cutoff distances
+int Input::Read_cutoff_distances(struct Cutoff_dist &cutoff_dist, ifstream &infile)
+{
+	if(cutoff_dist.mark)
+	{
+		cout << "Attention: \"" << cutoff_dist.keywords << "\" has been input!" << endl;
+		hout << "Attention: \"" << cutoff_dist.keywords << "\" has been input!" << endl;
+		return 0;
+	}
+	else cutoff_dist.mark = true;
 
+	istringstream istr0(Get_Line(infile));
+	istr0 >> cutoff_dist.van_der_Waals_dist;
+
+	istringstream istr1(Get_Line(infile));
+	istr1 >> cutoff_dist.tunneling_dist;
+
+	return 1;
+}
 //---------------------------------------------------------------------------
 //Reading current information
 int Input::Read_electrical_paramters(struct Electric_para &electric_para, ifstream &infile)

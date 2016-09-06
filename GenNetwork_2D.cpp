@@ -29,10 +29,10 @@ int GenNetwork::Generate_nanowire_networks(const struct Geom_RVE &geom_rve, cons
 	cub.hei_z = geom_rve.ez_hei;
      
 	//The geometric structure of CNT network (by threads in Tecplot)
-	if(Tecexpt->Export_network_threads(cub, cnts_points)==0) return 0;
+//	if(Tecexpt->Export_network_threads(cub, cnts_points)==0) return 0;
      
 	//The geometric structure of CNT network (by tetrahedron meshes in Tecplot) //Attention: little parts of nanotube volumes out of the cuboid
-	if(Tecexpt->Export_cnt_network_meshes(cub, cnts_points, cnts_radius)==0) return 0; 
+//	if(Tecexpt->Export_cnt_network_meshes(cub, cnts_points, cnts_radius)==0) return 0; 
 	
 	return 1;
 }	
@@ -67,9 +67,9 @@ int GenNetwork::Generate_network_threads_mt(const struct Geom_RVE &geom_rve, con
     int cnt_seed_count = 0; //to record the number of generated seeds of a CNT 
     int point_overlap_count = 0; //to record the number of overlappings to calculate the projected area properly. This gives the transparency %T=100-a1*A_nw
     int point_overlap_count_unique = 0; //to record the number of points that were overlapping other points ******May not be necessary, not sure : we will see later
-    const int MAX_ATTEMPTS = 5; // Overlapping case fixing
+    const int MAX_ATTEMPTS = 5; //Overlapping case fixing
 	
-	// Global coordinates global_coordinates[0].at(i) -> global_coordinates[1].at(i) i'th nanowire
+	//Global coordinates global_coordinates[0].at(i) -> global_coordinates[1].at(i) i'th nanowire
     vector<vector<int> > global_coordinates;
     //sectioned_domain[i] contains all the points in sub-region i.
     //Sub-region i is an overlapping subregion to check for penetrations

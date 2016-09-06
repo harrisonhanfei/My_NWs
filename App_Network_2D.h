@@ -15,13 +15,13 @@ using namespace hns;
 
 #include "Input_Reader.h"
 #include "GenNetwork_2D.h"
-//#include "Cutoff_Wins.h"
-//#include "Hoshen_Kopelman.h"
+#include "Cutoff_Wins.h"
+#include "Hoshen_Kopelman.h"
 //#include "Direct_Electrifying.h"
 //#include "Backbone_Network.h"
-//#include "Background_vectors.h"
-//#include "Contact_grid.h"
-//#include "Percolation.h"
+#include "Background_vectors.h"
+#include "Contact_grid.h"
+#include "Percolation.h"
 //#include "Clusters_fractions.h"
 #include "Tecplot_Export.h"
 

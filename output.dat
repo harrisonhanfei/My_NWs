@@ -1,0 +1,54 @@
+
+**********************************************
+                   NwNw_2D   v0.1								
+ 																			
+           Fei Han            Thirupathi Maloth				
+ 																			
+      Propriety of KAUST/COHMAS Laboratory	
+  fei.han@kaust.edu.sa  thirupathi.maloth@kaust.edu.sa	
+**********************************************
+
+
+======================================================
+-_- Input file reader......
+^_^ Data initialization achieves
+
+Reading input file...
+    The area fraction is 0.2
+Reading the keywords is finished!
+    Operation done in 0secs.
+^_^ Input achieves
+
+-_- To generate nanowire network......
+    The area fraction of generated CNTs is about : 0.203396
+There are 157 CNTs.
+There are 314 points.
+Nanowire network generation time: 0 secs.
+Generate shells and structure time: 0 secs.
+======================================================
+Iteration 0
+Observation window geometry:
+xmin=0 ymin=0
+w_x=1 w_y=1
+Extract observation window time: 1 secs.
+There are 16 overlapping sub-regions.
+Generate contact grid time: 0 secs.
+Determine nanowire clusters time: 0 secs.
+Iteration 0 time: 1 secs.
+
+*******************************************************************
+    The simulation took 1secs.
+^_^ End of simulation 
+*******************************************************************
+
+
+**********************************************
+              Hope it helped ;)											
+ 																				
+           Fei Han            Thirupathi Maloth							
+ 																				
+      Propriety of KAUST/COHMAS Laboratory		
+  fei.han@kaust.edu.sa  thirupathi.maloth@kaust.edu.sa		
+**********************************************
+
+

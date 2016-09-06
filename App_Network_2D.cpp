@@ -3,7 +3,7 @@
 //CODE FILE:	App_Network_3D.cpp
 //OBJECTIVE:	Create conductive nanowire network in 3D separated by backbone paths, dead branches and isolated clusters
 //AUTHOR:		Fei Han; Angel Mora
-//E-MAIL:			fei.han@kaust.edu.sa	;	angel.mora@kaust.edu.sa
+//E-MAIL:			fei.han@kaust.edu.sa;	angel.mora@kaust.edu.sa
 //====================================================================================
 
 #include "App_Network_2D.h"
@@ -14,13 +14,13 @@ int App_Network::Create_conductive_network_2D(Input *Init)const
 	//Time markers for total simulation
 	time_t ct0, ct1;
 	
-    vector<double> cnts_radius;						//Define the radius of each nanowire in the network
-    vector<Point_3D> cnts_point;					//Define the set of cnt point in a 1D vector
+    vector<double> cnts_radius;								//Define the radius of each nanowire in the network
+    vector<Point_3D> cnts_point;							//Define the set of cnt point in a 1D vector
     vector<vector<long int> > cnts_structure;			//The global number of points in the cnts
-//  vector<vector<int> > shells_cnt;               //Shell sub-regions to make the triming faster
+    vector<vector<int> > shells_cnt;						//Shell sub-regions to make the triming faster
     
     //-----------------------------------------------------------------------------------------------------------------------------------------
-    //Network Generation with overlapping
+    //Network generation with overlapping
     hout << "-_- To generate nanowire network......" << endl;
     ct0 = time(NULL);
     GenNetwork *Genet = new GenNetwork;
@@ -28,8 +28,9 @@ int App_Network::Create_conductive_network_2D(Input *Init)const
     delete Genet;
     ct1 = time(NULL);
     hout << "Nanowire network generation time: " << (int)(ct1-ct0) <<" secs." << endl;
-/*  
+ 
     //-----------------------------------------------------------------------------------------------------------------------------------------
+	//Using nested shells on the background to mark the CNTs for trimming faster in each observation window
 	ct0 = time(NULL);
     Background_vectors *Bckg = new Background_vectors;
     Geom_RVE geo = Init->geom_rve;
@@ -47,14 +48,14 @@ int App_Network::Create_conductive_network_2D(Input *Init)const
         
         //-----------------------------------------------------------------------------------------------------------------------------------------
         //These vectors are used to export tecplot files
-        vector<long int> empty;
-        vector<vector<long int> > all_dead_indices(7,empty);
-        vector<vector<long int> > all_indices(7,empty);
+//        vector<long int> empty;
+//        vector<vector<long int> > all_dead_indices(7,empty);
+//        vector<vector<long int> > all_indices(7,empty);
         
         //-----------------------------------------------------------------------------------------------------------------------------------------
         //Determine the local networks in cutoff windons
         Cutoff_Wins *Cutwins = new Cutoff_Wins;
-        //From this function I get the internal variables cnts_inside and boundary_cnt
+        //This function creates the internal variables "cnts_inside" and "boundary_cnt"
         ct0 = time(NULL);
         if(Cutwins->Extract_observation_window(Init->geom_rve, Init->nanowire_geo, cnts_structure, cnts_radius, cnts_point, shells_cnt, i)==0) return 0;
         ct1 = time(NULL);
@@ -67,7 +68,7 @@ int App_Network::Create_conductive_network_2D(Input *Init)const
         if (Contacts->Generate_contact_grid(Init->geom_rve, Init->cutoff_dist, Init->nanowire_geo, Cutwins->cnts_inside, cnts_structure, cnts_point, i)==0) return 0;
         ct1 = time(NULL);
         hout << "Generate contact grid time: "<<(int)(ct1-ct0)<<" secs."<<endl;
-        
+
         //-----------------------------------------------------------------------------------------------------------------------------------------
 		//Hoshen-Kopelman algorithm
 		Hoshen_Kopelman *HoKo = new Hoshen_Kopelman;
@@ -90,7 +91,7 @@ int App_Network::Create_conductive_network_2D(Input *Init)const
         vector<double> families_lengths(8,0);
         vector<double> fractions(8,0);
         vector<double> branches_lengths(7,0);
-
+/*
         //Loop over the different clusters so that the direct electrifying algorithm is apllied on each cluster
         if (HoKo->clusters_cnt.size()) {
             //hout << "clusters_cnt.size()="<<HoKo->clusters_cnt.size()<<endl;
@@ -132,18 +133,19 @@ int App_Network::Create_conductive_network_2D(Input *Init)const
         //if (Export_tecplot_files(i, Init->geom_rve, cnts_point, cnts_radius, cnts_structure, HoKo->isolated, all_dead_indices, all_indices)==0) return 0;
         //ct1 = time(NULL);
         //hout << "Export tecplot files time: "<<(int)(ct1-ct0)<<" secs."<<endl;
-        
+ */        
         it1 = time(NULL);
         hout << "Iteration "<<i<<" time: "<<(int)(it1-it0)<<" secs."<<endl;
-        
+       
         //Delete objects to free memory
         delete Cutwins;
         delete Contacts;
         delete HoKo;
         delete Perc;
-        delete Fracs;
+//        delete Fracs;
+
     }
-  */
+  
 
 	return 1;
 }
