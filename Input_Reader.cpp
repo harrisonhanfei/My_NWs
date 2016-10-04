@@ -30,10 +30,10 @@ int Input::Read_Infile(ifstream &infile)
 		else if(str_temp=="Nanowire_Geometry")	{ if(Read_nanowire_geo_parameters(nanowire_geo, infile)==0) return 0; }
 		else if(str_temp=="Cutoff_Distances")	{ if(Read_cutoff_distances(cutoff_dist, infile)==0) return 0; }
 		else if(str_temp=="Electrical_Parameters")	{ if(Read_electrical_paramters(electric_para, infile)==0) return 0; }
-		else 
+		else
 		{ 
 			cout << "Error: the keywords \"" << str_temp << "\" is not defined!" << endl; 
-			hout << "Error: the keywords \"" << str_temp << "\" is not defined!" << endl; 
+			hout << "Error: the keywords \"" << str_temp << "\" is not defined!" << endl;
 			return 0; 
 		}
 
@@ -86,14 +86,18 @@ int Input::Data_Initialization()
 	geom_rve.mark = false;
 	geom_rve.origin.x = 0.0;
 	geom_rve.origin.y = 0.0;
+	geom_rve.origin.z = 0.0;
 	geom_rve.origin.flag = 0;
 	geom_rve.len_x = 1.0;
 	geom_rve.wid_y = 1.0;
+	geom_rve.hei_z = 0.0;
 	geom_rve.ex_origin.x = 0.0;
 	geom_rve.ex_origin.y = 0.0;
+	geom_rve.ex_origin.z = 0.0;
 	geom_rve.ex_origin.flag = 0;
 	geom_rve.ex_len = 1.0;
 	geom_rve.ey_wid = 1.0;
+	geom_rve.ez_hei = 0.0;
 	geom_rve.crosec_area = geom_rve.len_x*geom_rve.wid_y;
 	geom_rve.density = 1.0;
 	geom_rve.gs_minx = 1.0;
@@ -110,7 +114,7 @@ int Input::Data_Initialization()
 	nanowire_geo.mark = false;
 	nanowire_geo.dir_distrib_type = "random";
 	nanowire_geo.angle_max = 1.5707963267948966;
-//	nanowire_geo.step_length = 0.01;
+	nanowire_geo.step_length = 0.01;
 	nanowire_geo.len_distrib_type = "uniform";
 	nanowire_geo.len_min = 1.0;
 	nanowire_geo.len_max = 1.0;
@@ -299,6 +303,14 @@ int Input::Read_nanowire_geo_parameters(struct Nanowire_Geo &nanowire_geo, ifstr
 	}
 
 	//-----------------------------------------------------------------------------------------------------------------------------------------
+	//Define the step length (unit: micromether) of nanotube growth
+	istringstream istr_step_len(Get_Line(infile));
+	istr_step_len >> nanowire_geo.step_length;
+	if(nanowire_geo.step_length<=0||
+	   nanowire_geo.step_length>=0.25*geom_rve.len_x||
+	   nanowire_geo.step_length>=0.25*geom_rve.wid_y)
+	{ hout << "Error: the step length must be positive and 0.25 times lesser than the dimension of the RVE region." << endl;	return 0; }
+
 	//-----------------------------------------------------------------------------------------------------------------------------------------
     //Define the distribution type (uniform or normal) of the length (unit: micromether) of nanowires and the length range (min, max) of nanowires in a RVE
     istringstream istr_cnt_len(Get_Line(infile));

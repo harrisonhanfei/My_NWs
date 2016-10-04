@@ -32,8 +32,11 @@ public:
     int Scan_sub_regions(const vector<Point_3D> &points_in, const vector<double> &radii, const double &tunnel, const vector<vector<long int> > &sectioned_domain);
     int Check_repeated(const vector<long int> &region, const long int &Point);
     int HK76(const int &CNT1, const int &CNT2, int &new_label);
-    int Find_root(int &L)const;
+    void Find_root(int &L)const;
     int Merge_labels(const int &root1, const int &root2);
+//int HK76(int CNT1, int CNT2, int &new_label);
+//int Find_root(int L);
+//int Merge_labels(int root1, int root2);
     int Make_CNT_clusters(const vector<vector<long int> > &structure, const vector<Point_3D> &points_in, const vector<int> &cnts_inside);
     int Scan_sub_regions_then_delete(const vector<Point_3D> &points_in, const vector<double> &radii, const double &tunnel, const vector<vector<long int> > &sectioned_domain);
 	void Delete_repeated_contacts();

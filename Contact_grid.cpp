@@ -142,7 +142,7 @@ int Contact_grid::Generate_contact_grid(const struct Geom_RVE &sample, const str
                 for (int jj = 0; jj < 2; jj++) 
 				{
                     if (!fy) jj++;						//if flag is zero, do this loop only once
-					t = calculate_t_2D(temp[ii][0],temp[jj][1],sx);
+					t = calculate_t_2D(temp[ii][0], temp[jj][1], sx);
 					sectioned_domain[t].push_back(P);
                 }
             }

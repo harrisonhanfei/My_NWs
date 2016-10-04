@@ -67,8 +67,7 @@ int Cutoff_Wins::Extract_observation_window(const struct Geom_RVE sample, const 
         return 0;
     }
 
-    //Fill the vector cnts_inside
-    int flag = 0;
+    //Fill the vector cnts_inside (the "structure[i].size()==0" isn't included in cnts_inside)
     for(int i = 0; i < (int)structure.size(); i++) 
 	{
         if(structure[i].size()>1) cnts_inside.push_back(i);
@@ -234,7 +233,8 @@ int Cutoff_Wins::Trim_boundary_cnts(vector<vector<int> > &shells_cnt, const int 
                     
                     //Add the points of the segment to the new CNT
                     //At the same time, update the CNT number of the points in the new CNT and add the CNT to the corresponding shell or shells
-                    for (int kk = index1; kk <= index2; kk++) {
+                    for (int kk = index1; kk <= index2; kk++) 
+					{
                         long int P = structure[CNT][kk];
                         structure.back().push_back(P);
                         points_in[P].flag = new_CNT;
@@ -461,7 +461,7 @@ void Cutoff_Wins::Add_to_boundary_vectors(const Point_3D &point3d, const long in
     //Add point and CNT to the boundary vector
     double x = point3d.x;
     double y = point3d.y;
-    double z = point3d.z;
+//    double z = point3d.z;
     if(fabs(x - xmin) < Zero){
         Add_CNT_to_boundary(boundary_cnt[0], new_CNT, point, 0, 0);
     }else if(fabs(x - (xmin+w_x)) < Zero){

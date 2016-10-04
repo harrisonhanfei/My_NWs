@@ -49,7 +49,7 @@ int Hoshen_Kopelman::Determine_nanowire_clusters(const struct Cutoff_dist &cutof
         hout << "Error in Determinate_nanotube_clusters." <<endl;
         return 0;
     }
-    
+
     //Make the clusters
     if (!Make_CNT_clusters(structure, points_in, cnts_inside))
 	{
@@ -108,13 +108,13 @@ int Hoshen_Kopelman::Scan_sub_regions(const vector<Point_3D> &points_in, const v
                         //Fill the vector of contacts contacts_point
                         contacts_point[P2].push_back(P1);
                         contacts_point[P1].push_back(P2);
-                    }
 
-                    //Here is where the actual HK76 algotihm takes place
-                    if (!HK76(CNT1, CNT2, new_label))
-					{
-                        hout << "Error in Contacts_and_HK76" << endl;
-                        return 0;
+						//Here is where the actual HK76 algotihm takes place
+						if (!HK76(CNT1, CNT2, new_label))
+						{
+							hout << "Error in Contacts_and_HK76" << endl;
+							return 0;
+						}
                     }
                 }
             }
@@ -187,15 +187,14 @@ int Hoshen_Kopelman::HK76(const int &CNT1, const int &CNT2, int &new_label)
 //---------------------------------------------------------------------------
 //Find in the label L is a root or it points to another label
 //If it points to another label, find that label (i.e. the root)
-int Hoshen_Kopelman::Find_root(int &L)const
+void Hoshen_Kopelman::Find_root(int &L)const
 {
 	while (labels_labels[L]<=0)
 	{
-        L = -labels_labels[L];
         //If labels_labels[L] = 0, then the root is zero, not necessarily L
         if (labels_labels[L]==0) { L=0; break; }
+		else L = -labels_labels[L];
 	}
-	return 1;
 }
 //---------------------------------------------------------------------------
 //This function merges two clusters
@@ -203,9 +202,9 @@ int Hoshen_Kopelman::Merge_labels(const int &root1, const int &root2)
 {
     if ((labels_labels[root1]<=0)||(labels_labels[root2]<=0))
 	{
-        hout << "Error on merging clusters. Both labels are negative, at this point this should not happen."<<endl;
+        hout << "Error on merging clusters. Any label in this two is negative, at this point this should not happen."<<endl;
         hout << "root1=" << root1 << " LL[root1]=" << labels_labels[root1];
-        hout << " root2=" << root2 << " LL[root2]=" << labels_labels[root2]<< endl;
+        hout << "root2=" << root2 << " LL[root2]=" << labels_labels[root2] << endl;
         return 0;
     }
 
@@ -233,7 +232,7 @@ int Hoshen_Kopelman::Make_CNT_clusters(const vector<vector<long int> > &structur
     label_map.assign(labels_labels.size(), -1);
     //This variable will be used to count the number of cluster
     int counter = 0;
-    
+
     //First scan all the labels of labels to find the proper labels and create the map of labels
     for (int i = 0; i < (int)labels_labels.size(); i++)
 	{
@@ -251,6 +250,7 @@ int Hoshen_Kopelman::Make_CNT_clusters(const vector<vector<long int> > &structur
     
     //Now scan the vector of cnts_inside. Check the label of each CNT to make the clusters.
     //The vectors for the labels of labels and label map are used to group the CNTs
+
     for (int i = 0; i < (int)cnts_inside.size(); i++)
 	{
         //Current CNT

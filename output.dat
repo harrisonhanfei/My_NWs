@@ -20,9 +20,9 @@ Reading the keywords is finished!
 ^_^ Input achieves
 
 -_- To generate nanowire network......
-    The area fraction of generated CNTs is about : 0.203396
-There are 157 CNTs.
-There are 314 points.
+    The area fraction of generated CNTs is about : 0.202519
+There are 232 CNTs.
+There are 464 points.
 Nanowire network generation time: 0 secs.
 Generate shells and structure time: 0 secs.
 ======================================================
@@ -34,7 +34,7 @@ Extract observation window time: 1 secs.
 There are 16 overlapping sub-regions.
 Generate contact grid time: 0 secs.
 Determine nanowire clusters time: 0 secs.
-Iteration 0 time: 1 secs.
+Export tecplot files time: 0 secs.
 
 *******************************************************************
     The simulation took 1secs.
